@@ -1,0 +1,13 @@
+.gallery__card-like {
+  padding: 0;
+  background: transparent url('../../../images/like_disabled.svg') no-repeat center;
+  border: none;
+  padding-left: 22px;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+  cursor: pointer;
+}
+
+.gallery__card-like:hover {
+  opacity: 0.5;
+}

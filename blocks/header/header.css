@@ -1,0 +1,10 @@
+.header {
+  padding-bottom: 42px;
+  font-size: 0;
+}
+
+@media screen and (min-width: 321px) {
+  .header {
+    padding-bottom: 40px;
+  }
+}
