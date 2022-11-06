@@ -26,6 +26,6 @@ _Проект личной галереи путешественника, пом
 
 ***
 
-* https://pavel-prokofev.github.io/mesto/index.html
+* [Ссылка на сайт проекта Место](https://pavel-prokofev.github.io/mesto/index.html)
 
 
