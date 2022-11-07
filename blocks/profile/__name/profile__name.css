@@ -3,6 +3,7 @@
   margin: 0 0 8px;
   min-height: 32px;
   font-weight: 500;
+  min-height: 32px;
   font-size: 27px;
   line-height: 1.2;
   text-overflow: ellipsis;
