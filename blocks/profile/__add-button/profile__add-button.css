@@ -7,6 +7,7 @@
   background: transparent url('../../../images/add.svg') no-repeat center / 16px;
   box-sizing: border-box;
   border: 2px solid #fff;
+  border-radius: 2px;
 }
 
 @media screen and (min-width: 769px) {

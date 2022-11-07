@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,23 +15,23 @@
 
     <header class="header">
       <img class="header__logo" src="./images/logo/logo.svg" alt="МЕСТО">
-      <hr class="header__line">
     </header>
 
     <main class="content">
 
       <section class="profile">
-        <figure class="profile__box">
+        <div class="profile__box">
           <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватарка">
-          <figcaption class="profile__bio">
+          <div class="profile__bio">
             <div class="profile__wrap">
-              <h1 class="profile__name">Введите ваше имя</h1>
-              <button class="profile__edit-button button-opacity"></button>
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <p class="profile__info">Исследователь океана</p>
             </div>
-              <p class="profile__info">Введите информацию о себе ;)</p>
-          </figcaption>
-        </figure>
-        <button class="profile__add-button button-opacity"></button>
+            <button type="button" class="profile__edit-button button-opacity"></button>
+          </div>
+        </div>
+        
+        <button type="button" class="profile__add-button button-opacity"></button>
       </section>
 
       <section class="gallery">
@@ -39,42 +40,42 @@
             <img class="gallery__card-image" src="./images/karachaevo_cherkesia.jpg" alt="Руины в горах">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Карачаевск</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
           <li class="gallery__card">
             <img class="gallery__card-image" src="./images/albrus.jpg" alt="Эльбрус в дали">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Гора Эльбрус</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
           <li class="gallery__card">
             <img class="gallery__card-image" src="./images/dombay.jpg" alt="Вид на горы">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Домбай</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
           <li class="gallery__card">
             <img class="gallery__card-image" src="./images/albrus.jpg" alt="Эльбрус в дали">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Гора Эльбрус</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
           <li class="gallery__card">
             <img class="gallery__card-image" src="./images/dombay.jpg" alt="Вид на горы">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Домбай</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
           <li class="gallery__card">
             <img class="gallery__card-image" src="./images/karachaevo_cherkesia.jpg" alt="Руины в горах">
             <div class="gallery__wrap">
               <h2 class="gallery__card-title">Карачаево-Черкесия</h2>
-              <button class="gallery__card-like"></button>
+              <button type="button" class="gallery__card-like"></button>
             </div>
           </li>
         </ul>
@@ -86,32 +87,23 @@
       <p class="footer__copyright" lang="en">© 2020 Mesto Russia</p>
     </footer>
 
-   <div class="popup">
-      
+    <div class="popup">
       <div class="popup__content">
-
-        <button class="popup__close-button button-opacity"></button>
+        <button type="button" class="popup__close-button button-opacity"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-
-        <form class="popup__form">
-
+        <form name="form" class="popup__form">
           <fieldset class="popup__personal-data">
-          
-            <input type="text" name="username" class="popup__name popup__text-box" value="" placeholder="Имя" required> 
-          
-            <input type="text" name="occupation" class="popup__info popup__text-box" value="" placeholder="Личная информация" required> 
-          
-         </fieldset> 
-
+            <input type="text" name="username" class="popup__text-box popup__text-box_type_name" value="" placeholder="Имя" required>
+            <input type="text" name="occupation" class="popup__text-box popup__text-box_type_info" value=""
+              placeholder="Личная информация" required>
+          </fieldset>
           <button type="submit" class="popup__save-button">Сохранить</button>
-
         </form>
-
       </div>
-
     </div>
 
   </div>
-<script src="./scripts/index.js" defer></script>
+  <script src="./scripts/index.js" defer></script>
 </body>
+
 </html>
