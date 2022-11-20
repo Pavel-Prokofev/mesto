@@ -34,50 +34,8 @@
         <button type="button" class="profile__add-button button-opacity"></button>
       </section>
 
-      <section class="gallery">
+      <section class="gallery" aria-label="Фото галерея">
         <ul class="gallery__cards">
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/karachaevo_cherkesia.jpg" alt="Руины в горах">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Карачаевск</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/albrus.jpg" alt="Эльбрус в дали">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Гора Эльбрус</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/dombay.jpg" alt="Вид на горы">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Домбай</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/albrus.jpg" alt="Эльбрус в дали">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Гора Эльбрус</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/dombay.jpg" alt="Вид на горы">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Домбай</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
-          <li class="gallery__card">
-            <img class="gallery__card-image" src="./images/karachaevo_cherkesia.jpg" alt="Руины в горах">
-            <div class="gallery__wrap">
-              <h2 class="gallery__card-title">Карачаево-Черкесия</h2>
-              <button type="button" class="gallery__card-like"></button>
-            </div>
-          </li>
         </ul>
       </section>
 
@@ -87,11 +45,11 @@
       <p class="footer__copyright" lang="en">© 2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_edit">
       <div class="popup__content">
         <button type="button" class="popup__close-button button-opacity"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="form" class="popup__form">
+        <form name="user-form" class="popup__form">
           <fieldset class="popup__personal-data">
             <input type="text" name="username" class="popup__text-box popup__text-box_type_name" value="" placeholder="Имя" required>
             <input type="text" name="occupation" class="popup__text-box popup__text-box_type_info" value=""
@@ -101,6 +59,42 @@
         </form>
       </div>
     </div>
+
+    <div class="popup popup_add">
+      <div class="popup__content">
+        <button type="button" class="popup__close-button button-opacity"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form name="card-form" class="popup__form">
+          <fieldset class="popup__personal-data">
+            <input type="text" name="title" class="popup__text-box popup__text-box_type_title" value="" placeholder="Название" required>
+            <input type="text" name="img-src" class="popup__text-box popup__text-box_type_img-src" value=""
+              placeholder="Ссылка на картинку" required>
+          </fieldset>
+          <button type="submit" class="popup__save-button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup-viewing">
+      <div class="popup-viewing__content">
+        <button type="button" class="popup-viewing__close-button button-opacity"></button>
+        <figure class="popup-viewing__figure">
+          <img class="popup-viewing__figure-image" src="#" alt="">
+          <figcaption class="popup-viewing__figure-title"></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <template id="gallery__card-template">
+      <li class="gallery__card">
+        <button type="button" class="gallery__card-trash button-opacity"></button>
+        <img class="gallery__card-image" src="" alt="">
+        <div class="gallery__wrap">
+          <h2 class="gallery__card-title"></h2>
+          <button type="button" class="gallery__card-like"></button>
+        </div>
+      </li>
+    </template>
 
   </div>
   <script src="./scripts/index.js" defer></script>
