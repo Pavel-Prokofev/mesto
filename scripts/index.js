@@ -6,25 +6,22 @@ const profileInfo = document.querySelector('.profile__info');
 
 const popupEdit = document.querySelector('.popup_edit');
 const popupEditFormElement = popupEdit.querySelector('.popup__form');
-const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
-const popupEditSaveButton = popupEdit.querySelector('.popup__save-button');
 const popupEditInputName = popupEdit.querySelector('.popup__text-box_type_name');
 const popupEditInputInfo = popupEdit.querySelector('.popup__text-box_type_info');
 
 const popupAdd = document.querySelector('.popup_add');
 const popupAddFormElementEdit = popupAdd.querySelector('.popup__form');
-const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
-const popupAddSaveButton = popupAdd.querySelector('.popup__save-button');
 const popupAddInputTitle = popupAdd.querySelector('.popup__text-box_type_title');
 const popupAddInputSrc = popupAdd.querySelector('.popup__text-box_type_img-src');
 
 const galleryContainer = document.querySelector('.gallery__cards');
 const cardTemplate = document.querySelector('#gallery__card-template').content.querySelector('.gallery__card');
 
-const popupViewing = document.querySelector('.popup-viewing');
-const popupViewingImage = popupViewing.querySelector('.popup-viewing__figure-image');
-const popupViewingTitle = popupViewing.querySelector('.popup-viewing__figure-title');
-const popupViewingCloseButton = popupViewing.querySelector('.popup-viewing__close-button');
+const popupViewing = document.querySelector('.popup_viewing');
+const popupViewingImage = popupViewing.querySelector('.popup__figure-image');
+const popupViewingTitle = popupViewing.querySelector('.popup__figure-title');
+
+const closeButtons = document.querySelectorAll('.popup__close-button');
 
 const initialCards = [
   {
@@ -67,37 +64,30 @@ const initialCards = [
 
 
 
-const OnOffPopup  = popup => popup.classList.toggle('popup-opened');
+const openPopup  = popup => popup.classList.add('popup_opened');
+
+const closePopup  = popup => popup.classList.remove('popup_opened');
 
 const saveTextInValue = (a, b) => a.value = b.textContent;
 
 const saveValueInText = (a, b) => a.textContent = b.value;
 
 
+
 profileEditButton.addEventListener('click', () => {
-  OnOffPopup(popupEdit);
+  openPopup(popupEdit);
   saveTextInValue(popupEditInputName, profileName);
   saveTextInValue(popupEditInputInfo, profileInfo);
 });
 
-popupEditCloseButton.addEventListener('click', () => {
-  OnOffPopup(popupEdit);
-});
-
-popupEditSaveButton.addEventListener('click', (evt) => {
+const handleEditForm = (evt) => {
+  evt.preventDefault();
   saveValueInText(profileName, popupEditInputName);
   saveValueInText(profileInfo, popupEditInputInfo);
-  OnOffPopup(popupEdit);
-  evt.preventDefault();
-});
+  closePopup(popupEdit);
+};
 
-popupEditFormElement.addEventListener('submit', (evt) => {
-  saveValueInText(profileName, popupEditInputName);
-  saveValueInText(profileInfo, popupEditInputInfo);
-  OnOffPopup(popupEdit);
-  evt.preventDefault();
-});
-
+popupEditFormElement.addEventListener('submit', handleEditForm);
 
 
 const handleLikeCard = (likeButton) => {
@@ -112,11 +102,8 @@ const renderPopupViewing = (image, title) => {
   popupViewingImage.src = image.src;
   popupViewingImage.alt = title.textContent;
   popupViewingTitle.textContent = title.textContent;
+  openPopup(popupViewing);
 };
-
-popupViewingCloseButton.addEventListener('click', () => {
-  OnOffPopup(popupViewing);
-});
 
 const generateCard = (dataCard) => {
   const newCard = cardTemplate.cloneNode(true);
@@ -138,7 +125,6 @@ const generateCard = (dataCard) => {
 
   image.addEventListener('click', () => {
     renderPopupViewing(image, title);
-    OnOffPopup(popupViewing);
   });
   
   return newCard;
@@ -151,21 +137,19 @@ initialCards.forEach((dataCard) => {
 });
 
 profileAddButton.addEventListener('click', () => {
-  OnOffPopup(popupAdd);
-});
-
-popupAddCloseButton.addEventListener('click', () => {
-  OnOffPopup(popupAdd);
+  openPopup(popupAdd);
 });
 
 const handleAddCard = (evt) => {
   evt.preventDefault();
   renderCard({ name: popupAddInputTitle.value, link:  popupAddInputSrc.value });
-  OnOffPopup(popupAdd);
-  popupAddInputTitle.value = '';
-  popupAddInputSrc.value = '';
+  closePopup(popupAdd);
+  popupAddFormElementEdit.reset();
 };
 
-popupAddSaveButton.addEventListener('click', handleAddCard);
-
 popupAddFormElementEdit.addEventListener('submit', handleAddCard);
+
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
+});
