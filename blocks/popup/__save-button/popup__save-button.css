@@ -12,6 +12,8 @@
   line-height: 1.2;
   text-align: center;
   background-color: #000;
+  border-radius: 2px;
+  box-sizing: border-box;
   min-height: 46px;
   width: 100%;
   opacity: 1;
