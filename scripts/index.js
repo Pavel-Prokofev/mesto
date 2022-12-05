@@ -62,11 +62,22 @@ const initialCards = [
   }
 ];
 
+const closeByEscape = (evt) => {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+};
 
+const openPopup = popup => {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape);
+};
 
-const openPopup = popup => popup.classList.add('popup_opened');
-
-const closePopup = popup => popup.classList.remove('popup_opened');
+const closePopup = popup => {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
+};
 
 const saveTextInValue = (a, b) => a.value = b.textContent;
 
@@ -102,6 +113,8 @@ profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   saveTextInValue(popupEditInputName, profileName);
   saveTextInValue(popupEditInputInfo, profileInfo);
+  clearErrorTextсontent(popupEdit);
+  removeErrorStileClass(popupEdit);
 
   if (profileName.textContent && profileInfo.textContent) {
     onSubmitbutton(popupEdit);
@@ -171,6 +184,8 @@ profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
   popupAddFormElementEdit.reset();
   offSubmitbutton(popupAdd);
+  clearErrorTextсontent(popupAdd);
+  removeErrorStileClass(popupAdd);
 });
 
 const handleAddCard = (evt) => {
@@ -193,19 +208,14 @@ popups.forEach((popup) => {
 
     if (isOverlay || isCloseButton) {
       closePopup(popup);
-      clearErrorTextсontent(popup);
-      removeErrorStileClass(popup);
     };
+
   });
-
-
-  document.addEventListener('keydown', (evt) => {
-    const isOverlay = popup.classList.contains('popup_opened');
-    if (evt.key === 'Escape' && isOverlay) {
-      closePopup(popup);
-      clearErrorTextсontent(popup);
-      removeErrorStileClass(popup);
-    };
-  });
-
+  
 });
+
+
+
+
+
+ 
