@@ -213,9 +213,3 @@ popups.forEach((popup) => {
   });
   
 });
-
-
-
-
-
- 
