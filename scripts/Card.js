@@ -1,13 +1,20 @@
 class Card {
-  constructor(dataCard, cardTemplate, renderPopupViewing) {
+  constructor(dataCard, cardTemplateId, renderPopupViewing) {
     this._link = dataCard.link;
     this._name = dataCard.name;
-    this._cardTemplate = cardTemplate;
+    this._cardTemplateId = cardTemplateId;
     this._renderPopupViewing = renderPopupViewing;
   };
 
-  _handleLikeCard(likeButton) {
-    likeButton.classList.toggle('gallery__card-like_active');
+  _getTemplate() {
+    return document
+      .querySelector(`#${this._cardTemplateId}`)
+      .content.querySelector('.gallery__card')
+      .cloneNode(true);
+  };
+
+  _handleLikeCard() {
+    this._likeButton.classList.toggle('gallery__card-like_active');
   };
 
   _handleTrashCard() {
@@ -24,24 +31,24 @@ class Card {
     this._title.textContent = this._name;
   };
 
-  _setEventListeners(image, title) {
-    const likeButton = this._newCard.querySelector('.gallery__card-like');
-    likeButton.addEventListener('click', () => {
-    this._handleLikeCard(likeButton);
-  });
+  _setEventListeners() {
+    this._likeButton = this._newCard.querySelector('.gallery__card-like');
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeCard();
+    });
 
     const trashBtn = this._newCard.querySelector('.gallery__card-trash');
     trashBtn.addEventListener('click', () => {
-    this._handleTrashCard();
-  });
+      this._handleTrashCard();
+    });
 
     this._image.addEventListener('click', () => {
-    this._renderPopupViewing(this._image, this._title);
-  });
+      this._renderPopupViewing(this._image, this._title);
+    });
   };
 
   generateCard() {
-    this._newCard = this._cardTemplate.cloneNode(true);
+    this._newCard = this._getTemplate();
     this._setData();
     this._setEventListeners();
 

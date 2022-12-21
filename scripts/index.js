@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import {initialCards, listOfCurrentClassesBasic} from './constantsObjects.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -18,7 +19,7 @@ const popupAddInputTitle = popupAdd.querySelector('.popup__text-box_type_title')
 const popupAddInputSrc = popupAdd.querySelector('.popup__text-box_type_img-src');
 
 const galleryContainer = document.querySelector('.gallery__cards');
-const cardTemplateBasic = document.querySelector('#gallery__card-template').content.querySelector('.gallery__card');
+const cardTemplateIdBasic = 'gallery__card-template';
 
 const popupViewing = document.querySelector('.popup_viewing');
 const popupViewingImage = popupViewing.querySelector('.popup__figure-image');
@@ -26,54 +27,8 @@ const popupViewingTitle = popupViewing.querySelector('.popup__figure-title');
 
 const popups = Array.from(document.querySelectorAll('.popup'));
 
-const initialCards = [
-  {
-    name: 'Домбай',
-    link: './images/dombay.jpg'
-  },
-  {
-    name: 'Гора Эльбрус',
-    link: './images/albrus.jpg'
-  },
-  {
-    name: 'Карачаевск',
-    link: './images/karachaevo_cherkesia.jpg'
-  },
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const listOfCurrentClassesBasic = {
-  formClass: 'popup__form',
-  fieldsetClass: 'popup__personal-data',
-  inputClass: 'popup__text-box',
-  submitButtonClass: 'popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__text-box_type_error',
-  formErrorClassKey: '-error'
-};
+const formValidatorPopupEdit = new FormValidator(listOfCurrentClassesBasic, popupEdit);
+const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, popupAdd);
 
 const closeByEscape = (evt) => {
   if (evt.key === 'Escape') {
@@ -96,15 +51,13 @@ const saveTextInValue = (a, b) => a.value = b.textContent;
 
 const saveValueInText = (a, b) => a.textContent = b.value;
 
-
+formValidatorPopupEdit.enableValidation();
 
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   saveTextInValue(popupEditInputName, profileName);
   saveTextInValue(popupEditInputInfo, profileInfo);
-
-  const formValidator = new FormValidator(listOfCurrentClassesBasic, popupEdit);
-  formValidator.enableValidation();
+  formValidatorPopupEdit.resetErrorWhenOpeningPopup();
 });
 
 const handleEditForm = (evt) => {
@@ -112,12 +65,9 @@ const handleEditForm = (evt) => {
   saveValueInText(profileName, popupEditInputName);
   saveValueInText(profileInfo, popupEditInputInfo);
   closePopup(popupEdit);
-
 };
 
 popupEditFormElement.addEventListener('submit', handleEditForm);
-
-
 
 const renderPopupViewingBasic = (image, title) => {
   popupViewingImage.src = image.src;
@@ -126,46 +76,44 @@ const renderPopupViewingBasic = (image, title) => {
   openPopup(popupViewing);
 };
 
-const renderCard = (dataCard, cardTemplate, renderPopupViewing) => {
-  const card = new Card(dataCard, cardTemplate, renderPopupViewing);
+const createCard = (dataCard, cardTemplateId, renderPopupViewing) => {
+  return new Card(dataCard, cardTemplateId, renderPopupViewing);
+};
+
+const renderCard = (card) => {
   galleryContainer.prepend(card.generateCard());
 };
 
 initialCards.forEach((dataCard) => {
-  renderCard(dataCard, cardTemplateBasic, renderPopupViewingBasic);
+  const card = createCard(dataCard, cardTemplateIdBasic, renderPopupViewingBasic);
+  renderCard(card);
 });
 
-
+formValidatorPopupAdd.enableValidation();
 
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
   popupAddFormElementEdit.reset();
-  const formValidator = new FormValidator(listOfCurrentClassesBasic, popupAdd);
-  formValidator.enableValidation();
+  formValidatorPopupAdd.resetErrorWhenOpeningPopup();
 });
 
 const handleAddCard = (evt) => {
   evt.preventDefault();
-  renderCard({ name: popupAddInputTitle.value, link: popupAddInputSrc.value }, cardTemplateBasic, renderPopupViewingBasic);
+  const card = createCard({ name: popupAddInputTitle.value, link: popupAddInputSrc.value },
+    cardTemplateIdBasic, renderPopupViewingBasic);
+  renderCard(card);
   closePopup(popupAdd);
   popupAddFormElementEdit.reset();
 };
 
 popupAddFormElementEdit.addEventListener('submit', handleAddCard);
 
-
-
 popups.forEach((popup) => {
-
   popup.addEventListener('click', (evt) => {
-
     const isOverlay = evt.target.classList.contains('popup');
     const isCloseButton = evt.target.classList.contains('popup__close-button');
-
     if (isOverlay || isCloseButton) {
       closePopup(popup);
     };
-
   });
-
 });
