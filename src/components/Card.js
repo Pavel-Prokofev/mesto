@@ -1,9 +1,9 @@
 class Card {
-  constructor(dataCard, cardTemplateId, renderPopupViewing) {
+  constructor(dataCard, cardTemplateId, handleCardClick) {
     this._link = dataCard.link;
     this._name = dataCard.name;
     this._cardTemplateId = cardTemplateId;
-    this._renderPopupViewing = renderPopupViewing;
+    this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
@@ -26,7 +26,6 @@ class Card {
     this._image = this._newCard.querySelector('.gallery__card-image');
     this._image.src = this._link;
     this._image.alt = this._name;
-
     this._title = this._newCard.querySelector('.gallery__card-title');
     this._title.textContent = this._name;
   };
@@ -43,7 +42,7 @@ class Card {
     });
 
     this._image.addEventListener('click', () => {
-      this._renderPopupViewing(this._image, this._title);
+      this._handleCardClick(this._image, this._title);
     });
   };
 
@@ -51,7 +50,6 @@ class Card {
     this._newCard = this._getTemplate();
     this._setData();
     this._setEventListeners();
-
     return this._newCard;
   };
 };
