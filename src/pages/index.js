@@ -1,3 +1,4 @@
+import './index.css';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -11,7 +12,7 @@ import {
   popupEdit, popupEditFormElement, popupEditInputName, popupEditInputInfo,
   popupAdd, popupAddInputTitle, popupAddInputSrc,
   galleryContainerSelector, cardTemplateIdBasic
-} from './constants.js';
+} from '../utils/constants.js';
 
 const userInfoNew = new UserInfo({ userNameSelector: ".profile__name", userOccupationSelector: ".profile__info" });
 

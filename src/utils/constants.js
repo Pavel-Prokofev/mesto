@@ -1,15 +1,19 @@
+import dombay from '../images/dombay.jpg';
+import albrus from '../images/albrus.jpg';
+const karachaevoCherkesia = new URL('../images/karachaevo_cherkesia.jpg', import.meta.url);
+
 const initialCards = [
   {
     name: 'Домбай',
-    link: './images/dombay.jpg'
+    link: dombay
   },
   {
     name: 'Гора Эльбрус',
-    link: './images/albrus.jpg'
+    link: albrus
   },
   {
     name: 'Карачаевск',
-    link: './images/karachaevo_cherkesia.jpg'
+    link: karachaevoCherkesia
   },
   {
     name: 'Архыз',

@@ -21,7 +21,7 @@ class Popup {
   };
 
   setEventListeners() {
-    this._popup.addEventListener('click', () => {
+    this._popup.addEventListener('click', (evt) => {
       const isOverlay = evt.target.classList.contains('popup');
       const isCloseButton = evt.target.classList.contains('popup__close-button');
       if (isOverlay || isCloseButton) {
