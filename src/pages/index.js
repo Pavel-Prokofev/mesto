@@ -2,22 +2,22 @@ import './index.css';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import {
   initialCards, listOfCurrentClassesBasic,
   profileEditButton, profileAddButton,
-  popupEdit, popupEditFormElement, popupEditInputName, popupEditInputInfo,
-  popupAdd, popupAddInputTitle, popupAddInputSrc,
-  galleryContainerSelector, cardTemplateIdBasic
+  popupEditInputName, popupEditInputInfo,
 } from '../utils/constants.js';
 
 const userInfoNew = new UserInfo({ userNameSelector: ".profile__name", userOccupationSelector: ".profile__info" });
 
-const popupEditNew = new Popup('.popup_edit');
-const formValidatorPopupEdit = new FormValidator(listOfCurrentClassesBasic, popupEdit);
+const popupEditNew = new PopupWithForm('.popup_edit', (inputValues) => {
+  userInfoNew.setUserInfo(inputValues);
+  popupEditNew.close();
+});
+const formValidatorPopupEdit = new FormValidator(listOfCurrentClassesBasic, '.popup__form-edit');
 popupEditNew.setEventListeners();
 formValidatorPopupEdit.enableValidation();
 
@@ -29,37 +29,32 @@ profileEditButton.addEventListener('click', () => {
   formValidatorPopupEdit.resetErrorWhenOpeningPopup();
 });
 
-const handleEditForm = (evt) => {
-  evt.preventDefault();
-  userInfoNew.setUserInfo(popupEditInputName, popupEditInputInfo);
-  popupEditNew.close();
-};
-
-popupEditFormElement.addEventListener('submit', handleEditForm);
-
 const popupViewingNew = new PopupWithImage('.popup_viewing');
 popupViewingNew.setEventListeners();
 
-const popupAddNew = new PopupWithForm('.popup_add', (InputValues) => {
-  const defaultNewCard = new Section({
-    items: [{ name: popupAddInputTitle.value, link: popupAddInputSrc.value }],
-    renderer: (card) => {
-      const newcard = new Card(card, cardTemplateIdBasic, (image, title) => {
-        popupViewingNew.open(image, title);
-      });
-      const newcardElement = newcard.generateCard();
-      defaultNewCard.addItem(newcardElement);
-    },
+const creatCard = (card) => {
+  const newCard = new Card(card, '#gallery__card-template', (image, title) => {
+    popupViewingNew.open(image, title);
+  });
+  const newCardElement = newCard.generateCard();
+  return newCardElement;
+}
+
+const newSection = new Section({
+  items: initialCards,
+  renderer: (card) => {
+    newSection.addItem(creatCard(card));
   },
-    galleryContainerSelector
-  );
-  defaultNewCard.renderItems();
+},
+  '.gallery__cards'
+);
 
-  console.log(InputValues);
-
+const popupAddNew = new PopupWithForm('.popup_add', (inputValues) => {
+  newSection.addItem(creatCard({ name: inputValues.title, link: inputValues.img }))
   popupAddNew.close();
 });
-const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, popupAdd);
+
+const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, '.popup__form-add');
 popupAddNew.setEventListeners();
 formValidatorPopupAdd.enableValidation();
 
@@ -68,18 +63,4 @@ profileAddButton.addEventListener('click', () => {
   formValidatorPopupAdd.resetErrorWhenOpeningPopup();
 });
 
-const defaultCardList = new Section({
-  items: initialCards,
-  renderer: (card) => {
-    const newcard = new Card(card, cardTemplateIdBasic, (image, title) => {
-      popupViewingNew.open(image, title);
-    });
-
-    const newcardElement = newcard.generateCard();
-    defaultCardList.addItem(newcardElement);
-  },
-},
-  galleryContainerSelector
-);
-
-defaultCardList.renderItems();
+newSection.renderItems();

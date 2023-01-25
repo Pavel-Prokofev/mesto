@@ -1,14 +1,14 @@
 class Card {
-  constructor(dataCard, cardTemplateId, handleCardClick) {
+  constructor(dataCard, cardTemplateSelector, handleCardClick) {
     this._link = dataCard.link;
     this._name = dataCard.name;
-    this._cardTemplateId = cardTemplateId;
+    this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
     return document
-      .querySelector(`#${this._cardTemplateId}`)
+      .querySelector(this._cardTemplateSelector)
       .content.querySelector('.gallery__card')
       .cloneNode(true);
   };

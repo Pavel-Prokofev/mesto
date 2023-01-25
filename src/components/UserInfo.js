@@ -11,9 +11,9 @@ class UserInfo {
     return userData;
   };
 
-  setUserInfo(newUserName, newUserOccupation) {
-    this._userName.textContent = newUserName.value;
-    this._userOccupation.textContent = newUserOccupation.value;
+  setUserInfo({ username, occupation }) {
+    this._userName.textContent = username;
+    this._userOccupation.textContent = occupation;
   };
 }
 
