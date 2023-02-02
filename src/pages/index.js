@@ -7,6 +7,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import {
   initialCards, listOfCurrentClassesBasic,
+  formEdit, formAdd,
   profileEditButton, profileAddButton,
   popupEditInputName, popupEditInputInfo,
 } from '../utils/constants.js';
@@ -17,7 +18,7 @@ const popupEditNew = new PopupWithForm('.popup_edit', (inputValues) => {
   userInfoNew.setUserInfo(inputValues);
   popupEditNew.close();
 });
-const formValidatorPopupEdit = new FormValidator(listOfCurrentClassesBasic, '.popup__form-edit');
+const formValidatorPopupEdit = new FormValidator(listOfCurrentClassesBasic, /*'.popup__form-edit'*/formEdit);
 popupEditNew.setEventListeners();
 formValidatorPopupEdit.enableValidation();
 
@@ -54,7 +55,7 @@ const popupAddNew = new PopupWithForm('.popup_add', (inputValues) => {
   popupAddNew.close();
 });
 
-const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, '.popup__form-add');
+const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, formAdd/*'.popup__form-add'*/);
 popupAddNew.setEventListeners();
 formValidatorPopupAdd.enableValidation();
 

@@ -1,11 +1,11 @@
 class FormValidator {
-  constructor(listOfCurrentClasses, formSelector) {
+  constructor(listOfCurrentClasses, form) {
     this._inputClass = listOfCurrentClasses.inputClass;
     this._submitButtonClass = listOfCurrentClasses.submitButtonClass;
     this._inactiveButtonClass = listOfCurrentClasses.inactiveButtonClass;
     this._inputErrorClass = listOfCurrentClasses.inputErrorClass;
     this._formErrorClassKey = listOfCurrentClasses.formErrorClassKey;
-    this._formSelector = formSelector;
+    this._form = form;
   };
 
   _showError(inputElement) {
@@ -69,7 +69,7 @@ class FormValidator {
   };
 
   enableValidation() {
-    this._form = document.querySelector(this._formSelector);
+   // this._form = document.querySelector(this._formSelector);
     this._setEventListeners();
   };
 };

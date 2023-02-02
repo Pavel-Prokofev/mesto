@@ -52,12 +52,16 @@ const listOfCurrentClassesBasic = {
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 
+const formEdit = document.querySelector('.popup__form-edit');
+const formAdd = document.querySelector('.popup__form-add');
+
 const popupEdit = document.querySelector('.popup_edit');
 const popupEditInputName = popupEdit.querySelector('.popup__text-box_type_name');
 const popupEditInputInfo = popupEdit.querySelector('.popup__text-box_type_info');
 
 export {
   initialCards, listOfCurrentClassesBasic,
+  formEdit, formAdd,
   profileEditButton, profileAddButton,
   popupEditInputName, popupEditInputInfo,
 };
