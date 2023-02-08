@@ -34,7 +34,6 @@
 .profile__avatar-box::before {
   content: "";
   background: url('../../../images/edit.svg') no-repeat center / 26px;
-  transition: opacity 2s;
   position: absolute;
   opacity: 0;
   transition: opacity 2s;
