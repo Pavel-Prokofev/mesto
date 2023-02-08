@@ -1,8 +1,9 @@
 .gallery__card-like {
   padding: 0;
-  background: transparent url('../../../images/like_disabled.svg') no-repeat center;
+  background: url('../../../images/like_disabled.svg') no-repeat center;
   border: none;
-  padding-left: 22px;
+  width: 23px;
+  height: 19px;
   opacity: 1;
   transition: opacity 0.3s linear;
   cursor: pointer;

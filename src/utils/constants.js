@@ -1,46 +1,3 @@
-import dombay from '../images/dombay.jpg';
-import albrus from '../images/albrus.jpg';
-const karachaevoCherkesia = new URL('../images/karachaevo_cherkesia.jpg', import.meta.url);
-
-const initialCards = [
-  {
-    name: 'Домбай',
-    link: dombay
-  },
-  {
-    name: 'Гора Эльбрус',
-    link: albrus
-  },
-  {
-    name: 'Карачаевск',
-    link: karachaevoCherkesia
-  },
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const listOfCurrentClassesBasic = {
   inputClass: 'popup__text-box',
   submitButtonClass: 'popup__save-button',
@@ -50,18 +7,30 @@ const listOfCurrentClassesBasic = {
 };
 
 const profileEditButton = document.querySelector('.profile__edit-button');
+const profileEditAvatarButton = document.querySelector('.profile__avatar-box');
 const profileAddButton = document.querySelector('.profile__add-button');
 
 const formEdit = document.querySelector('.popup__form-edit');
+const formEditAvatar = document.querySelector('.popup__form-edit-avatar');
 const formAdd = document.querySelector('.popup__form-add');
 
 const popupEdit = document.querySelector('.popup_edit');
 const popupEditInputName = popupEdit.querySelector('.popup__text-box_type_name');
 const popupEditInputInfo = popupEdit.querySelector('.popup__text-box_type_info');
 
-export {
-  initialCards, listOfCurrentClassesBasic,
-  formEdit, formAdd,
-  profileEditButton, profileAddButton,
-  popupEditInputName, popupEditInputInfo,
+const configApi = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-58',
+  headers: {
+    authorization: '671343e9-f0a7-463f-80c9-744ddd3c1bdb',
+    'Content-Type': 'application/json'
+  }
 };
+
+
+
+export {
+  listOfCurrentClassesBasic,
+  formEdit, formEditAvatar, formAdd,
+  profileEditButton, profileEditAvatarButton, profileAddButton,
+  popupEditInputName, popupEditInputInfo,
+  configApi};

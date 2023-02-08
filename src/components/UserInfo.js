@@ -1,7 +1,8 @@
 class UserInfo {
-  constructor({ userNameSelector, userOccupationSelector }) {
+  constructor({ userNameSelector, userOccupationSelector, userAvatarSelector }) {
     this._userName = document.querySelector(userNameSelector);
     this._userOccupation = document.querySelector(userOccupationSelector);
+    this._userAvatar = document.querySelector(userAvatarSelector);
   };
 
   getUserInfo() {
@@ -11,9 +12,18 @@ class UserInfo {
     return userData;
   };
 
-  setUserInfo({ username, occupation }) {
-    this._userName.textContent = username;
-    this._userOccupation.textContent = occupation;
+  transferMyId() {
+    return this._myId;
+  };
+
+  setUserInfo({ name, about, _id }) {
+    this._userName.textContent = name;
+    this._userOccupation.textContent = about;
+    this._myId = _id
+  };
+
+  setUseravatar({ avatar }) {
+    this._userAvatar.src = avatar;
   };
 }
 

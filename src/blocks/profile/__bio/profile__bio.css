@@ -7,7 +7,7 @@
 @media screen and (min-width: 769px) {
   .profile__bio {
     margin-left: 0;
-    max-width: calc(100vw - 150px - 150px - 50px);
+    max-width: calc(100vw - 150px - 150px - 80px);
   }
 }
 

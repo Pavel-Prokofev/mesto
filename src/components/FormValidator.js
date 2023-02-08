@@ -46,7 +46,7 @@ class FormValidator {
     };
   };
 
-  _setEventListeners() {
+  enableValidation() {
     this._inputList = Array.from(this._form.querySelectorAll(`.${this._inputClass}`));
     this._buttonSave = this._form.querySelector(`.${this._submitButtonClass}`);
     this._inputList.forEach((inputElement) => {
@@ -68,10 +68,6 @@ class FormValidator {
     this._hidenAllError();
   };
 
-  enableValidation() {
-   // this._form = document.querySelector(this._formSelector);
-    this._setEventListeners();
-  };
 };
 
 export default FormValidator;

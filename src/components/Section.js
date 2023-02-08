@@ -1,6 +1,5 @@
 class Section {
-  constructor({ items, renderer }, boxSelector) {
-    this._itemsArray = items;
+  constructor(renderer, boxSelector) {
     this._renderer = renderer;
     this._container = document.querySelector(boxSelector);
   };
@@ -9,8 +8,12 @@ class Section {
     this._container.prepend(item);
   };
 
-  renderItems() {
-    this._itemsArray.forEach((item) => {
+  addDefaultItems(item) {
+    this._container.append(item);
+  };
+
+  renderItems(res) {
+    res.forEach((item) => {
       this._renderer(item);
     });
   };
