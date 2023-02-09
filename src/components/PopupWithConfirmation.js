@@ -6,8 +6,21 @@ class PopupWithConfirmation extends Popup {
     this._formSubmit = formSubmit;
     this._popupFormElementEdit = this._popup.querySelector('.popup__form');
 
+    this._submitButton = this._popupFormElementEdit.querySelector('.popup__save-button');
+    this._submitButtonDefaultTextContent = this._submitButton.textContent;
+
     this._submit = this._submit.bind(this);
     this._handleEnter = this._handleEnter.bind(this);
+
+    this._loadingErrorBox = this._popup.querySelector('.loading-error');
+  };
+
+  renderLoadingError(loadingErrorText) {
+    this._loadingErrorBox.textContent = loadingErrorText;
+  };
+
+  renderRemoveLoadingError() {
+    this._loadingErrorBox.textContent = '';
   };
 
   _handleEnter(evt) {
@@ -18,8 +31,9 @@ class PopupWithConfirmation extends Popup {
 
   close() {
     super.close()
+    this.renderRemoveLoadingError();
     document.removeEventListener('keydown', this._handleEnter);
-  }
+  };
 
   open(card, cardId) {
     super.open();
@@ -35,9 +49,8 @@ class PopupWithConfirmation extends Popup {
 
   _submit(evt) {
     evt.preventDefault();
-    this._formSubmit(this._cardId);
-    this.close();
-  }
+    this._formSubmit(this._cardId, this._submitButton, this._submitButtonDefaultTextContent);
+  };
 
   setEventListeners() {
     super.setEventListeners();

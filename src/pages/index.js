@@ -16,37 +16,41 @@ import {
   configApi
 } from '../utils/constants.js';
 
-const PopupWithErrorNew = new PopupWithError('.popup_error');
-PopupWithErrorNew.setEventListeners();
+const popupWithErrorNew = new PopupWithError('.popup_error');
+popupWithErrorNew.setEventListeners();
+
+const renderLoading = (button, loadingButtonText) => button.textContent = loadingButtonText;
+const renderEndLoading = (button, defaultButtonText) => button.textContent = defaultButtonText;
 
 const api = new Api(configApi);
 
 const userInfoNew = new UserInfo({
   userNameSelector: '.profile__name',
   userOccupationSelector: '.profile__info',
-  userAvatarSelector: '.profile__avatar'
+  userAvatarSelector: '.profile__avatar',
+  userDataError: (err) => {
+    popupWithErrorNew.open(`Ошибка при загрузке с сервера ${err} пользователя`);
+  }
 });
 
-
-
 const popupEditNew = new PopupWithForm('.popup_edit',
-  (inputValues) => {
+  (inputValues, button, defaultButtonText) => {
+    popupEditNew.renderRemoveLoadingError();
     if (userInfoNew.transferMyId()) {
-      popupEditNew.renderLoading(true);
+      renderLoading(button, 'Сохранение...');
       api.patchUserInfo({ name: inputValues.username, about: inputValues.occupation })
         .then((res) => {
           userInfoNew.setUserInfo(res);
+          popupEditNew.close();
         })
         .catch((err) => {
-          PopupWithErrorNew.open(`Ошибка при перезаписи данных пользователя: ${err}`);
+          popupEditNew.renderLoadingError(`Ошибка при перезаписи данных пользователя: ${err}.`);
         })
         .finally(() => {
-          popupEditNew.renderLoading(false);
-          popupEditNew.close();
+          renderEndLoading(button, defaultButtonText);
         });
     } else {
-      popupEditNew.close();
-      PopupWithErrorNew.open(`Ошибка при загрузке новых данных на сервер вызваная некорреректной загрузкой данных пользователя`);
+      popupEditNew.renderLoadingError(`Ошибка при загрузке новых данных на сервер вызваная некорреректной загрузкой данных пользователя.`);
     }
   }
 );
@@ -64,23 +68,23 @@ profileEditButton.addEventListener('click',
 );
 
 const popupEditAvatarNew = new PopupWithForm('.popup_edit-avatar',
-  (inputValues) => {
+  (inputValues, button, defaultButtonText) => {
+    popupEditAvatarNew.renderRemoveLoadingError();
     if (userInfoNew.transferMyId()) {
-      popupEditAvatarNew.renderLoading(true);
+      renderLoading(button, 'Сохранение...');
       api.patchUserAvatar(inputValues)
         .then((res) => {
           userInfoNew.setUseravatar(res);
+          popupEditAvatarNew.close();
         })
         .catch((err) => {
-          PopupWithErrorNew.open(`Ошибка при перезаписи аватара пользователя: ${err}`);
+          popupEditAvatarNew.renderLoadingError(`Ошибка при перезаписи аватара пользователя: ${err}.`);
         })
         .finally(() => {
-          popupEditAvatarNew.renderLoading(false);
-          popupEditAvatarNew.close();
+          renderEndLoading(button, defaultButtonText);
         });
     } else {
-      popupEditAvatarNew.close();
-      PopupWithErrorNew.open(`Ошибка при загрузке новых данных на сервер вызваная некорреректной загрузкой данных пользователя`);
+      popupEditAvatarNew.renderLoadingError(`Ошибка при загрузке новых данных на сервер вызваная некорреректной загрузкой данных пользователя.`);
     }
   }
 );
@@ -97,18 +101,24 @@ profileEditAvatarButton.addEventListener('click',
 const popupViewingNew = new PopupWithImage('.popup_viewing');
 popupViewingNew.setEventListeners();
 
-const PopupWithConfirmationNew = new PopupWithConfirmation('.popup_del-card',
-  (cardId) => {
+const popupWithConfirmationNew = new PopupWithConfirmation('.popup_del-card',
+  (cardId, button, defaultButtonText) => {
+    popupWithConfirmationNew.renderRemoveLoadingError();
+    renderLoading(button, 'Удаление...');
     api.delCard(cardId)
       .then(() => {
-        PopupWithConfirmationNew.delCard();
+        popupWithConfirmationNew.delCard();
+        popupWithConfirmationNew.close();
       })
       .catch((err) => {
-        PopupWithErrorNew.open(`Ошибка при удалении карточки с сервера: ${err}`);
+        popupWithConfirmationNew.renderLoadingError(`Ошибка при удалении карточки с сервера: ${err}.`);
+      })
+      .finally(() => {
+        renderEndLoading(button, defaultButtonText);
       });
   }
 );
-PopupWithConfirmationNew.setEventListeners();
+popupWithConfirmationNew.setEventListeners();
 
 const creatCard = (card) => {
   if (userInfoNew.transferMyId()) {
@@ -124,7 +134,7 @@ const creatCard = (card) => {
         myId: userInfoNew.transferMyId(),
 
         handleDelCard: (card, cardId) => {
-          PopupWithConfirmationNew.open(card, cardId);
+          popupWithConfirmationNew.open(card, cardId);
         },
 
         hendleAddLike: (cardId) => {
@@ -134,7 +144,7 @@ const creatCard = (card) => {
               newCard.handlelikesCounter(res);
             })
             .catch((err) => {
-              PopupWithErrorNew.open(`Ошибка при добавлении лайка карточки на сервер: ${err}`);
+              popupWithErrorNew.open(`Ошибка при добавлении лайка карточки на сервер: ${err}.`);
             });
         },
 
@@ -145,15 +155,19 @@ const creatCard = (card) => {
               newCard.handlelikesCounter(res);
             })
             .catch((err) => {
-              PopupWithErrorNew.open(`Ошибка при удалении лайка карточки с сервера: ${err}`);
+              popupWithErrorNew.open(`Ошибка при удалении лайка карточки с сервера: ${err}.`);
             });
+        },
+
+        cardDataError: () => {
+          popupWithErrorNew.open(`Ошибка при загрузке с сервера ${err} карточки`);
         }
       }
     );
-
     return newCard.generateCard();
-  }
-  PopupWithErrorNew.open(`Ошибка при загрузке новой карточки на сервер вызваная некорреректной загрузкой данных пользователя`);
+  } else {
+    popupWithErrorNew.open(`Ошибка при загрузке новой карточки на сервер вызваная некорреректной загрузкой данных пользователя.`);
+  };
 }
 
 const newSection = new Section(
@@ -164,22 +178,25 @@ const newSection = new Section(
 );
 
 const popupAddNew = new PopupWithForm('.popup_add',
-  (inputValues) => {
-    popupAddNew.renderLoading(true);
-    api.postNewCard({ name: inputValues.title, link: inputValues.img })
-      .then((res) => {
-        newSection.addItem(creatCard(res));
-      })
-      .catch((err) => {
-        popupAddNew.close();
-        PopupWithErrorNew.open(`Ошибка при загрузки новой карточки на сервер: ${err}`);
-      })
-      .finally(() => {
-        popupAddNew.renderLoading(false);
-        popupAddNew.close();
-      });
-  }
-);
+  (inputValues, button, defaultButtonText) => {
+    popupAddNew.renderRemoveLoadingError();
+    if (userInfoNew.transferMyId()) {
+      renderLoading(button, 'Создание...');
+      api.postNewCard({ name: inputValues.title, link: inputValues.img })
+        .then((res) => {
+          newSection.addItem(creatCard(res));
+          popupAddNew.close();
+        })
+        .catch((err) => {
+          popupAddNew.renderLoadingError(`Ошибка при загрузке новой карточки на сервер: ${err}.`);
+        })
+        .finally(() => {
+          renderEndLoading(button, defaultButtonText);
+        });
+    } else {
+      popupAddNew.renderLoadingError(`Ошибка при загрузке новой карточки на сервер вызваная некорреректной загрузкой данных пользователя.`);
+    };
+  });
 
 const formValidatorPopupAdd = new FormValidator(listOfCurrentClassesBasic, formAdd);
 popupAddNew.setEventListeners();
@@ -191,7 +208,6 @@ profileAddButton.addEventListener('click',
     formValidatorPopupAdd.resetErrorWhenOpeningPopup();
   });
 
-
 api.getUserInfo()
   .then((res) => {
     userInfoNew.setUserInfo(res);
@@ -202,10 +218,10 @@ api.getUserInfo()
           newSection.renderItems(res);
         })
         .catch((err) => {
-          PopupWithErrorNew.open(`Ошибка при загрузке карточек с сервера: ${err}`);
+          popupWithErrorNew.open(`Ошибка при загрузке карточек с сервера: ${err}.`);
         });
     }
   })
   .catch((err) => {
-    PopupWithErrorNew.open(`Ошибка при загрузке данных пользователя с сервера: ${err}`);
+    popupWithErrorNew.open(`Ошибка при загрузке данных пользователя с сервера: ${err}.`);
   });

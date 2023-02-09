@@ -26,11 +26,10 @@ const configApi = {
   }
 };
 
-
-
 export {
   listOfCurrentClassesBasic,
   formEdit, formEditAvatar, formAdd,
   profileEditButton, profileEditAvatarButton, profileAddButton,
   popupEditInputName, popupEditInputInfo,
-  configApi};
+  configApi
+};

@@ -1,6 +1,6 @@
 class Card {
   constructor({ name, link, likes, _id, owner },
-    { cardTemplateSelector, handleCardClick, myId, handleDelCard, hendleAddLike, hendleRemoveLike }) {
+    { cardTemplateSelector, handleCardClick, myId, handleDelCard, hendleAddLike, hendleRemoveLike, cardDataError }) {
     this._link = link;
     this._name = name;
     this._likes = likes;
@@ -12,6 +12,7 @@ class Card {
     this._handleDelCard = handleDelCard;
     this._hendleAddLike = hendleAddLike;
     this._hendleRemoveLike = hendleRemoveLike;
+    this._cardDataError = cardDataError;
   };
 
   _getTemplate() {
@@ -23,20 +24,26 @@ class Card {
 
   _checkMyLike() {
     return this._likes.some(likeItem => likeItem._id === this._myId);
-  }
+  };
 
   _handleLikeCard() {
-    if (this._checkMyLike()) {
-      this._hendleRemoveLike(this._cardId);
-    } else { this._hendleAddLike(this._cardId); };
+    if (this._cardId) {
+      if (this._checkMyLike()) {
+        this._hendleRemoveLike(this._cardId);
+      } else { this._hendleAddLike(this._cardId); };
+    } else { this._cardDataError('id'); };
   };
 
   _assigningLikesCounter() {
-    this._likesCounter.textContent = this._likes.length;
-  }
+    if (this._likes) {
+      this._likesCounter.textContent = this._likes.length;
+    } else { this._cardDataError('Лайков'); };
+  };
 
   handlelikesCounter(res) {
+
     this._likes = res.likes;
+
     this._assigningLikesCounter();
   };
 
@@ -50,13 +57,19 @@ class Card {
 
   _setData() {
     this._image = this._newCard.querySelector('.gallery__card-image');
-    this._image.src = this._link;
-    this._image.alt = this._name;
+    if (this._link) {
+      this._image.src = this._link;
+    } else { this._cardDataError('URL'); };
+
     this._title = this._newCard.querySelector('.gallery__card-title');
-    this._title.textContent = this._name;
+    if (this._name) {
+      this._title.textContent = this._name;
+      this._image.alt = this._name;
+    } else { this._cardDataError('Названия'); };
 
     this._likeButton = this._newCard.querySelector('.gallery__card-like');
     this._likesCounter = this._newCard.querySelector('.gallery__card-like-counter');
+
     this._assigningLikesCounter();
     if (this._checkMyLike()) { this.addLike(); };
   };

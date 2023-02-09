@@ -4,18 +4,18 @@ class Api {
     this._headers = headers;
   };
 
-_defaultIf(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(res.status);
-};
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res.status);
+  };
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   patchUserInfo({ name, about }) {
@@ -27,10 +27,10 @@ _defaultIf(res) {
         about: about
       })
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
-  patchUserAvatar({avatar}) {
+  patchUserAvatar({ avatar }) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -38,14 +38,14 @@ _defaultIf(res) {
         avatar: avatar
       })
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   getAllCards() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   postNewCard({ name, link }) {
@@ -57,7 +57,7 @@ _defaultIf(res) {
         link: link
       })
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   putCardLike(cardId) {
@@ -65,7 +65,7 @@ _defaultIf(res) {
       method: 'PUT',
       headers: this._headers
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   delCardLike(cardId) {
@@ -73,7 +73,7 @@ _defaultIf(res) {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
   delCard(cardId) {
@@ -81,7 +81,7 @@ _defaultIf(res) {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => this._defaultIf(res))
+      .then((res) => this._checkResponse(res))
   };
 
 }
