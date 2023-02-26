@@ -1,9 +1,8 @@
 import Popup from "./Popup.js";
 
 class PopupWithConfirmation extends Popup {
-  constructor(selector, formSubmit) {
+  constructor(selector) {
     super(selector);
-    this._formSubmit = formSubmit;
     this._popupFormElementEdit = this._popup.querySelector('.popup__form');
 
     this._submitButton = this._popupFormElementEdit.querySelector('.popup__save-button');
@@ -35,21 +34,15 @@ class PopupWithConfirmation extends Popup {
     document.removeEventListener('keydown', this._handleEnter);
   };
 
-  open(card, cardId) {
+  open(formSubmit) {
     super.open();
-    this._card = card;
-    this._cardId = cardId;
+    this._formSubmit = formSubmit;
     document.addEventListener('keydown', this._handleEnter);
-  };
-
-  delCard() {
-    this._card.remove();
-    this._card = null;
   };
 
   _submit(evt) {
     evt.preventDefault();
-    this._formSubmit(this._cardId, this._submitButton, this._submitButtonDefaultTextContent);
+    this._formSubmit(this._submitButton, this._submitButtonDefaultTextContent);
   };
 
   setEventListeners() {

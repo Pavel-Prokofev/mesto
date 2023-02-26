@@ -101,23 +101,7 @@ profileEditAvatarButton.addEventListener('click',
 const popupViewingNew = new PopupWithImage('.popup_viewing');
 popupViewingNew.setEventListeners();
 
-const popupWithConfirmationNew = new PopupWithConfirmation('.popup_del-card',
-  (cardId, button, defaultButtonText) => {
-    popupWithConfirmationNew.renderRemoveLoadingError();
-    renderLoading(button, 'Удаление...');
-    api.delCard(cardId)
-      .then(() => {
-        popupWithConfirmationNew.delCard();
-        popupWithConfirmationNew.close();
-      })
-      .catch((err) => {
-        popupWithConfirmationNew.renderLoadingError(`Ошибка при удалении карточки с сервера: ${err}.`);
-      })
-      .finally(() => {
-        renderEndLoading(button, defaultButtonText);
-      });
-  }
-);
+const popupWithConfirmationNew = new PopupWithConfirmation('.popup_del-card');
 popupWithConfirmationNew.setEventListeners();
 
 const creatCard = (card) => {
@@ -133,8 +117,23 @@ const creatCard = (card) => {
 
         myId: userInfoNew.transferMyId(),
 
-        handleDelCard: (card, cardId) => {
-          popupWithConfirmationNew.open(card, cardId);
+        handleDelCard: () => {
+          popupWithConfirmationNew.open((button, defaultButtonText) => {
+            popupWithConfirmationNew.renderRemoveLoadingError();
+
+            renderLoading(button, 'Удаление...');
+            api.delCard(card._id)
+              .then(() => {
+                newCard.delCard();
+                popupWithConfirmationNew.close();
+              })
+              .catch((err) => {
+                popupWithConfirmationNew.renderLoadingError(`Ошибка при удалении карточки с сервера: ${err}.`);
+              })
+              .finally(() => {
+                renderEndLoading(button, defaultButtonText);
+              });
+          })
         },
 
         hendleAddLike: (cardId) => {

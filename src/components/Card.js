@@ -1,6 +1,7 @@
 class Card {
   constructor({ name, link, likes, _id, owner },
-    { cardTemplateSelector, handleCardClick, myId, handleDelCard, hendleAddLike, hendleRemoveLike, cardDataError }) {
+    { cardTemplateSelector, handleCardClick, myId, 
+      handleDelCard, hendleAddLike, hendleRemoveLike, cardDataError }) {
     this._link = link;
     this._name = name;
     this._likes = likes;
@@ -41,9 +42,7 @@ class Card {
   };
 
   handlelikesCounter(res) {
-
     this._likes = res.likes;
-
     this._assigningLikesCounter();
   };
 
@@ -82,7 +81,7 @@ class Card {
     const trashButton = this._newCard.querySelector('.gallery__card-trash');
     if (this._creatorCardId === this._myId) {
       trashButton.addEventListener('click', () => {
-        this._handleDelCard(this._newCard, this._cardId);
+        this._handleDelCard();
       });
     } else {
       trashButton.remove();
@@ -98,6 +97,11 @@ class Card {
     this._setData();
     this._setEventListeners();
     return this._newCard;
+  };
+
+  delCard() {
+    this._newCard.remove();
+    this._newCard = null;
   };
 
 };
